@@ -12,4 +12,6 @@ fn panic(_info: &core::panic::PanicInfo) -> ! {
 //
 
 #[no_mangle]
-extern "C" fn app_main() {}
+extern "C" fn app_main() {
+    loop {}
+}

@@ -9,9 +9,14 @@ fn main() {
     // Path to the ESP-IDF headers and toolchain headers
     let toolchain_include_path = "/Users/tokumei/.rustup/toolchains/esp/xtensa-esp-elf/esp-13.2.0_20230928/xtensa-esp-elf/xtensa-esp-elf/include";
     let esp_idf_components_path = "/Users/tokumei/Work/esp-idf/components";
+    let macos_sdk_include_path =
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include";
 
     // Collect all include paths from ESP-IDF components
-    let mut include_paths = vec![format!("-I{}", toolchain_include_path)];
+    let mut include_paths = vec![
+        format!("-I{}", toolchain_include_path),
+        format!("-I{}", macos_sdk_include_path), // Include the path to the standard C++ library headers on macOS
+    ];
 
     for entry in fs::read_dir(esp_idf_components_path).expect("Directory not found") {
         let entry = entry.expect("Failed to read directory entry");
@@ -53,6 +58,7 @@ fn main() {
         .clang_arg("-x")
         .clang_arg("c++")
         .clang_arg("-std=c++11")
+        .clang_arg("-DconfigNUMBER_OF_CORES=2")
         .parse_callbacks(Box::new(bindgen::CargoCallbacks))
         .generate()
         .expect("Unable to generate bindings");

@@ -4,14 +4,6 @@
       "path": "./"
     },
     {
-      "name": "rustpio",
-      "path": "rustpio"
-    },
-    {
-      "name": "xtensa_test",
-      "path": "xtensa_test"
-    },
-    {
       "name": "timer",
       "path": "timer"
     }
